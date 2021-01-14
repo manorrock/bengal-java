@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**
- * The JUnit tests for the MessageObject class.
+ * The JUnit tests for the MessageMethod class.
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class MessageObjectTest {
+public class MessageMethodTest {
     
     /**
      * Test getName method.
