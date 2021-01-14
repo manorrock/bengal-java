@@ -1,2 +1,4 @@
 /message/core/target/
 /message/emitter/target/
+/message/core/nbproject/
+/message/emitter/nbproject/

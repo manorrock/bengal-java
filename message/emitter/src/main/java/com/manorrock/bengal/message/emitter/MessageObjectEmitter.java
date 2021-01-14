@@ -20,7 +20,7 @@ public class MessageObjectEmitter {
      */
     public String emit(MessageObject messageObject) {
         StringBuilder javaCode = new StringBuilder();
-        javaCode.append("public class");
+        javaCode.append("public class ").append(messageObject.getName()).append(" {}");
         return javaCode.toString();
     }
 }
