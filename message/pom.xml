@@ -11,8 +11,9 @@
     <packaging>pom</packaging>
     <name>Manorrock Bengal - Message - Project</name>
     <modules>
-        <module>emitter</module>
         <module>core</module>
+        <module>emitter</module>
+        <module>interpreter</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
