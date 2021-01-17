@@ -1,6 +1,2 @@
-/message/core/target/
-/message/emitter/target/
-/message/core/nbproject/
-/message/emitter/nbproject/
-/message/interpreter/target/
-/message/compiler/target/
+nbproject/
+target/
