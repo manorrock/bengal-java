@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <name>Manorrock Bengal - Message - Project</name>
     <modules>
+        <module>compiler</module>
         <module>core</module>
         <module>emitter</module>
         <module>interpreter</module>

@@ -55,6 +55,7 @@
         </dependencies>
     </dependencyManagement>
     <modules>
+        <module>compiler</module>
         <module>message</module>
     </modules>
     <properties>
