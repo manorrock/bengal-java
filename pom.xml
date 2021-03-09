@@ -64,7 +64,8 @@
     </dependencyManagement>
     <modules>
         <module>compiler</module>
-        <module>message</module>
+        <module>core</module>
+        <module>emitter</module>
         <module>interpreter</module>
     </modules>
 </project>
