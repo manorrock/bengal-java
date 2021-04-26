@@ -1,0 +1,6 @@
+object HelloWorld {
+
+    native helloWorld() {
+        System.out.println("Hello World");
+    }
+}
