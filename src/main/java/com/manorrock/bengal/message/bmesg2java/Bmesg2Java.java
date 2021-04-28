@@ -1,4 +1,4 @@
-package com.manorrock.bengal.message.msg2java;
+package com.manorrock.bengal.message.bmesg2java;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.File;
@@ -9,17 +9,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
-@Command(name = "bmsg2java", description = "The Bengal Message to Java compiler")
-public class Msg2Java implements Callable<Integer> {
+/**
+ * The 'bmesg2java' CLI.
+ * 
+ * @author Manfred Riem (mriem@manorrock.com)
+ */
+@Command(name = "bmesg2java", description = "The Bengal Message to Java transpiler")
+public class Bmesg2Java implements Callable<Integer> {
 
     /**
      * Stores the source files.
      */
-    @Parameters(description = "The source file(s) to process")
+    @Parameters(description = "The source file(s) to transpile")
     List<String> sourceFiles;
 
     /**
@@ -31,7 +38,7 @@ public class Msg2Java implements Callable<Integer> {
         int result = 0;
         if (sourceFiles != null) {
             for (String sourceFile : sourceFiles) {
-                compileFile(sourceFile);
+                transpileFile(sourceFile);
             }
         } else {
             System.out.println("No source files found");
@@ -40,27 +47,44 @@ public class Msg2Java implements Callable<Integer> {
     }
 
     /**
-     * Compile the given file.
+     * Convert to nodes.
+     * 
+     * @param inputString the input string.
+     */
+    private List<?> convertToNodes(String inputString) {
+        return inputString
+            .chars()
+            .mapToObj(character -> new CharacterNode((char) character))
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Tranpsile the given file.
      * 
      * @throws IOException when an I/O error occurs.
      */
-    private void compileFile(String sourceFile) throws IOException {
-        System.out.println("Compiling - " + sourceFile);
+    private void transpileFile(String sourceFile) throws IOException {
+        System.out.println("Transpiling - " + sourceFile);
         String sourceContent = new String(Files.readAllBytes(Paths.get(sourceFile)), UTF_8);
         String destinationFilename = sourceFile;
         destinationFilename = destinationFilename.substring(0, destinationFilename.lastIndexOf("."));
         destinationFilename = destinationFilename + ".java";
         PrintWriter destinationWriter = new PrintWriter(new FileWriter(new File(destinationFilename)));
-        destinationWriter.println(sourceContent);
+        List<?> nodes = convertToNodes(sourceContent);
+        if (!nodes.isEmpty()) {
+            for(Object node : nodes) {
+                destinationWriter.print(node.toString());
+            }
+        }
         destinationWriter.flush();
     }
 
     /**
-     * Main entrypoint for msg2java.
+     * Main entrypoint for bmesg2java.
      *
      * @param arguments the command line arguments.
      */
     public static void main(String[] arguments) {
-        System.exit(new CommandLine(new Msg2Java()).execute(arguments));
+        System.exit(new CommandLine(new Bmesg2Java()).execute(arguments));
     }
 }

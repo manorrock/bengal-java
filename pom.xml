@@ -27,7 +27,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.manorrock.bengal.message.msg2java.Msg2Java</mainClass>
+                            <mainClass>com.manorrock.bengal.message.bmesg2java.Bmesg2Java</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
