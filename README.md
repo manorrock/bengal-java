@@ -1,4 +1,3 @@
-## Bengal Message to Java compiler
-### by Manorrock.com
+## Bengal Message to Java transpiler
 
-This project delivers you the Bengal Message to Java compiler.
+This project delivers you the Bengal Message to Java transpiler.
