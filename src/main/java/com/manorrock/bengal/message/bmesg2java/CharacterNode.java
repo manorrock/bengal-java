@@ -5,7 +5,7 @@ package com.manorrock.bengal.message.bmesg2java;
  * 
  * @author Manfred Riem (mriem@manorrock.com)
  */
-public class CharacterNode {
+public class CharacterNode implements Node {
     
     /**
      * Stores the character.

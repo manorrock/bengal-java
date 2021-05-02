@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
@@ -51,11 +52,34 @@ public class Bmesg2Java implements Callable<Integer> {
      * 
      * @param inputString the input string.
      */
-    private List<?> convertToNodes(String inputString) {
+    private List<Node> convertToNodes(String inputString) {
         return inputString
             .chars()
             .mapToObj(character -> new CharacterNode((char) character))
             .collect(Collectors.toList());
+    }
+
+    /**
+     * Transpiler - phase 1.
+     * 
+     * @param inputList the input list.
+     * @return the output list.
+     */
+    private List<Node> phase1(List<Node> inputList) {
+        List<Node> result = new ArrayList<>();
+        KeywordNode keyword = new KeywordNode("object");
+        StringBuilder candidate = new StringBuilder();
+        for(Node node : inputList) {
+            candidate.append(node.toString());
+            if (!keyword.getKeyword().startsWith(candidate.toString())) {
+                result.addAll(convertToNodes(candidate.toString()));
+                candidate.setLength(0);
+            } else if (candidate.toString().equals(keyword.getKeyword())) {
+                result.add(keyword);
+                candidate.setLength(0);
+            }
+        }
+        return result;
     }
 
     /**
@@ -70,7 +94,8 @@ public class Bmesg2Java implements Callable<Integer> {
         destinationFilename = destinationFilename.substring(0, destinationFilename.lastIndexOf("."));
         destinationFilename = destinationFilename + ".java";
         PrintWriter destinationWriter = new PrintWriter(new FileWriter(new File(destinationFilename)));
-        List<?> nodes = convertToNodes(sourceContent);
+        List<Node> nodes = convertToNodes(sourceContent);
+        nodes = phase1(nodes);
         if (!nodes.isEmpty()) {
             for(Object node : nodes) {
                 destinationWriter.print(node.toString());
